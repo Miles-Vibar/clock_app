@@ -84,7 +84,6 @@ class _StopwatchPageState extends State<StopwatchPage> {
           body: DefaultPageLayout(
             title: const Text(
               'Stopwatch',
-              style: TextStyle(fontWeight: FontWeight.w300),
             ),
             physics: const NeverScrollableScrollPhysics(),
             children: [

@@ -10,7 +10,6 @@ class TimerPage extends StatelessWidget {
     return DefaultPageLayout(
       title: const Text(
         'Timer',
-        style: TextStyle(fontWeight: FontWeight.w300),
       ),
       children: [],
     );

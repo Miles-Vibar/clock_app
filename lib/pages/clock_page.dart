@@ -12,7 +12,6 @@ class ClockPage extends StatelessWidget {
       body: DefaultPageLayout(
         title: const Text(
           'Clock',
-          style: TextStyle(fontWeight: FontWeight.w300),
         ),
         children: [],
       ),

@@ -24,8 +24,8 @@ class DefaultPageLayout extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           flexibleSpace: FlexibleSpaceBar(
             title: title,
+            centerTitle: true,
             titlePadding: const EdgeInsets.only(
-              left: 16.0,
               bottom: 16.0,
             ),
             expandedTitleScale: 2.0,

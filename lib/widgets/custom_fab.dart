@@ -14,26 +14,29 @@ class CustomFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: 75,
-      child: width == null ? AspectRatio(
-        aspectRatio: 1 / 1,
-        child: FilledButton(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 24.0),
+      child: SizedBox(
+        width: width,
+        height: 75,
+        child: width == null ? AspectRatio(
+          aspectRatio: 1 / 1,
+          child: FilledButton(
+            onPressed: onPressed,
+            child: Center(
+              child: Icon(
+                icon,
+                size: 40,
+              ),
+            ),
+          ),
+        ) : FilledButton(
           onPressed: onPressed,
           child: Center(
             child: Icon(
               icon,
               size: 40,
             ),
-          ),
-        ),
-      ) : FilledButton(
-        onPressed: onPressed,
-        child: Center(
-          child: Icon(
-            icon,
-            size: 40,
           ),
         ),
       ),

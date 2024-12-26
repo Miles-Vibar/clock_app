@@ -1,3 +1,4 @@
+import 'package:clock_app/widgets/custom_fab.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/default_page_layout.dart';
@@ -15,6 +16,7 @@ class ClockPage extends StatelessWidget {
         ),
         children: [],
       ),
+      floatingActionButton: CustomFab(icon: Icons.add, onPressed: () => ()),
     );
   }
 }

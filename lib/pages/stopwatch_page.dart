@@ -142,59 +142,56 @@ class _StopwatchPageState extends State<StopwatchPage> {
               ),
             ],
           ),
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 24.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (state is StopwatchPaused)
-                  CustomFab(
-                    icon: Icons.stop,
-                    onPressed: () {
-                      _stop();
-                      context.read<StopwatchBloc>().add(StopwatchStop());
-                    },
-                  ),
-                if (state is StopwatchPaused)
-                  CustomFab(
-                      icon: Icons.play_arrow,
-                      onPressed: () {
-                        if (!_stopwatch.isRunning) {
-                          _start();
-                          context.read<StopwatchBloc>().add(StopwatchStart());
-                        }
-                      }),
-                if (state is StopwatchStopped)
-                  CustomFab(
-                    width: 150,
+          floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if (state is StopwatchPaused)
+                CustomFab(
+                  icon: Icons.stop,
+                  onPressed: () {
+                    _stop();
+                    context.read<StopwatchBloc>().add(StopwatchStop());
+                  },
+                ),
+              if (state is StopwatchPaused)
+                CustomFab(
                     icon: Icons.play_arrow,
                     onPressed: () {
                       if (!_stopwatch.isRunning) {
                         _start();
                         context.read<StopwatchBloc>().add(StopwatchStart());
                       }
-                    },
-                  ),
-                if (state is StopwatchRunning)
-                  CustomFab(
-                    icon: Icons.flag,
-                    onPressed: () {
-                      _add();
-                      context.read<StopwatchBloc>().add(StopwatchLap());
-                    },
-                  ),
-                if (state is StopwatchRunning)
-                  CustomFab(
-                    icon: Icons.pause,
-                    onPressed: () {
-                      if (_stopwatch.isRunning) {
-                        _pause();
-                        context.read<StopwatchBloc>().add(StopwatchPause());
-                      }
-                    },
-                  ),
-              ],
-            ),
+                    }),
+              if (state is StopwatchStopped)
+                CustomFab(
+                  width: 150,
+                  icon: Icons.play_arrow,
+                  onPressed: () {
+                    if (!_stopwatch.isRunning) {
+                      _start();
+                      context.read<StopwatchBloc>().add(StopwatchStart());
+                    }
+                  },
+                ),
+              if (state is StopwatchRunning)
+                CustomFab(
+                  icon: Icons.flag,
+                  onPressed: () {
+                    _add();
+                    context.read<StopwatchBloc>().add(StopwatchLap());
+                  },
+                ),
+              if (state is StopwatchRunning)
+                CustomFab(
+                  icon: Icons.pause,
+                  onPressed: () {
+                    if (_stopwatch.isRunning) {
+                      _pause();
+                      context.read<StopwatchBloc>().add(StopwatchPause());
+                    }
+                  },
+                ),
+            ],
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,

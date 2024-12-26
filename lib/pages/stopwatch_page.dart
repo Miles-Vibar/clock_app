@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:clock_app/bloc/stopwatch/bloc.dart';
 import 'package:clock_app/bloc/stopwatch/events.dart';
 import 'package:clock_app/bloc/stopwatch/states.dart';
+import 'package:clock_app/widgets/custom_fab.dart';
 import 'package:clock_app/widgets/default_page_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -147,101 +148,50 @@ class _StopwatchPageState extends State<StopwatchPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 if (state is StopwatchPaused)
-                  SizedBox(
-                    height: 75,
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: FilledButton(
-                        onPressed: () {
-                          _stop();
-                          context.read<StopwatchBloc>().add(StopwatchStop());
-                        },
-                        child: const Center(
-                          child: Icon(
-                            Icons.stop,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ),
+                  CustomFab(
+                    icon: Icons.stop,
+                    onPressed: () {
+                      _stop();
+                      context.read<StopwatchBloc>().add(StopwatchStop());
+                    },
                   ),
                 if (state is StopwatchPaused)
-                  SizedBox(
-                    height: 75,
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: FilledButton(
-                        onPressed: () {
-                          if (!_stopwatch.isRunning) {
-                            _start();
-                            context.read<StopwatchBloc>().add(StopwatchStart());
-                          }
-                        },
-                        child: const Center(
-                          child: Icon(
-                            Icons.play_arrow,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                if (state is StopwatchStopped)
-                  SizedBox(
-                    width: 150,
-                    height: 75,
-                    child: FilledButton(
+                  CustomFab(
+                      icon: Icons.play_arrow,
                       onPressed: () {
                         if (!_stopwatch.isRunning) {
                           _start();
                           context.read<StopwatchBloc>().add(StopwatchStart());
                         }
-                      },
-                      child: const Icon(
-                        Icons.play_arrow,
-                        size: 40,
-                      ),
-                    ),
+                      }),
+                if (state is StopwatchStopped)
+                  CustomFab(
+                    width: 150,
+                    icon: Icons.play_arrow,
+                    onPressed: () {
+                      if (!_stopwatch.isRunning) {
+                        _start();
+                        context.read<StopwatchBloc>().add(StopwatchStart());
+                      }
+                    },
                   ),
                 if (state is StopwatchRunning)
-                  SizedBox(
-                    height: 75,
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: FilledButton(
-                        onPressed: () {
-                          _add();
-                          context.read<StopwatchBloc>().add(StopwatchLap());
-                        },
-                        child: const Center(
-                          child: Icon(
-                            Icons.flag,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ),
+                  CustomFab(
+                    icon: Icons.flag,
+                    onPressed: () {
+                      _add();
+                      context.read<StopwatchBloc>().add(StopwatchLap());
+                    },
                   ),
                 if (state is StopwatchRunning)
-                  SizedBox(
-                    height: 75,
-                    child: AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: FilledButton(
-                        onPressed: () {
-                          if (_stopwatch.isRunning) {
-                            _pause();
-                            context.read<StopwatchBloc>().add(StopwatchPause());
-                          }
-                        },
-                        child: const Center(
-                          child: Icon(
-                            Icons.pause,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ),
+                  CustomFab(
+                    icon: Icons.pause,
+                    onPressed: () {
+                      if (_stopwatch.isRunning) {
+                        _pause();
+                        context.read<StopwatchBloc>().add(StopwatchPause());
+                      }
+                    },
                   ),
               ],
             ),

@@ -7,12 +7,14 @@ class ClockPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultPageLayout(
-      title: const Text(
-        'Clock',
-        style: TextStyle(fontWeight: FontWeight.w300),
+    return Scaffold(
+      body: DefaultPageLayout(
+        title: const Text(
+          'Clock',
+          style: TextStyle(fontWeight: FontWeight.w300),
+        ),
+        children: [],
       ),
-      children: [],
     );
   }
 }

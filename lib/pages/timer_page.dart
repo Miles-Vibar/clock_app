@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clock_app/bloc/timer/bloc.dart';
 import 'package:clock_app/bloc/timer/states.dart';

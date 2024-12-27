@@ -13,7 +13,7 @@ class ClockPage extends StatelessWidget {
         title: const Text(
           'Clock',
         ),
-        children: [],
+        slivers: [],
       ),
       floatingActionButton: CustomFab(icon: Icons.add, onPressed: () => ()),
     );

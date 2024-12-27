@@ -8,9 +8,6 @@ import 'package:clock_app/widgets/default_page_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-typedef RemovedItemBuilder<E> = Widget Function(
-    E item, BuildContext context, Animation<double> animation);
-
 class StopwatchPage extends StatefulWidget {
   const StopwatchPage({super.key});
 
@@ -27,7 +24,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
   String _elapsedTime = '00:00.00';
   Timer? _timer;
 
-  _start() {
+  void _start() {
     _stopwatch.start();
     _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       final time = _stopwatch.elapsed;
@@ -38,10 +35,10 @@ class _StopwatchPageState extends State<StopwatchPage> {
   }
 
   String _formatTimeString(Duration time) {
-    return '${time.inMinutes.remainder(75).toString().padLeft(2, '0')}:${time.inSeconds.remainder(75).toString().padLeft(2, '0')}.${(time.inMilliseconds % 1000 ~/ 10).toString().padRight(2, '0')}';
+    return '${time.inMinutes.toString().padLeft(2, '0')}:${time.inSeconds.remainder(60).toString().padLeft(2, '0')}.${(time.inMilliseconds % 1000 ~/ 10).toString().padRight(2, '0')}';
   }
 
-  _stop() {
+  void _stop() {
     _listKey.currentState?.removeAllItems(
       (context, animation) => const SizedBox(),
     );
@@ -59,12 +56,12 @@ class _StopwatchPageState extends State<StopwatchPage> {
     _listKey.currentState?.didChangeDependencies();
   }
 
-  _pause() {
+  void _pause() {
     _stopwatch.stop();
     _timer?.cancel();
   }
 
-  _add() {
+  void _add() {
     if (_timeList.isEmpty) {
       _controller.animateTo(
         400,
@@ -86,7 +83,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
               'Stopwatch',
             ),
             physics: const NeverScrollableScrollPhysics(),
-            children: [
+            slivers: [
               SliverFillRemaining(
                 child: CustomScrollView(
                   controller: _controller,

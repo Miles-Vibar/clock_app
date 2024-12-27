@@ -19,26 +19,24 @@ class CustomFab extends StatelessWidget {
       child: SizedBox(
         width: width,
         height: 75,
-        child: width == null ? AspectRatio(
-          aspectRatio: 1 / 1,
-          child: FilledButton(
-            onPressed: onPressed,
-            child: Center(
-              child: Icon(
-                icon,
-                size: 40,
+        child: width == null
+            ? AspectRatio(
+                aspectRatio: 1 / 1,
+                child: IconButton(
+                  onPressed: onPressed,
+                  icon: Icon(
+                    icon,
+                    size: 40,
+                  ),
+                ),
+              )
+            : IconButton(
+                onPressed: onPressed,
+                icon: Icon(
+                  icon,
+                  size: 40,
+                ),
               ),
-            ),
-          ),
-        ) : FilledButton(
-          onPressed: onPressed,
-          child: Center(
-            child: Icon(
-              icon,
-              size: 40,
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -1,8 +1,11 @@
 import 'package:clock_app/bloc/stopwatch/bloc.dart';
+import 'package:clock_app/bloc/timer/bloc.dart';
+import 'package:clock_app/bloc/timer/events.dart';
 import 'package:clock_app/pages/alarm_page.dart';
 import 'package:clock_app/pages/clock_page.dart';
 import 'package:clock_app/pages/stopwatch_page.dart';
 import 'package:clock_app/pages/timer_page.dart';
+import 'package:clock_app/pages/timer_running_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +30,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<StopwatchBloc>(
           create: (context) => StopwatchBloc(),
-        )
+        ),
+        BlocProvider<TimerBloc>(
+          create: (context) => TimerBloc()..add(TimerStop()),
+        ),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
@@ -39,13 +45,16 @@ class MyApp extends StatelessWidget {
             backgroundColor: colorScheme.onPrimary,
             foregroundColor: colorScheme.primary,
           ),
-          filledButtonTheme: FilledButtonThemeData(
-            style: FilledButton.styleFrom(
+          iconButtonTheme: IconButtonThemeData(
+            style: IconButton.styleFrom(
               elevation: 5,
+              shadowColor: colorScheme.onSurface.withValues(alpha: 0.5),
               padding: EdgeInsets.zero,
               backgroundColor: colorScheme.onPrimary,
-              foregroundColor: colorScheme.primary,
-            )
+            ),
+          ),
+          iconTheme: IconThemeData(
+            color: colorScheme.primary,
           ),
           useMaterial3: true,
         ),
@@ -88,6 +97,26 @@ class MyApp extends StatelessWidget {
                   routes: [
                     GoRoute(
                       path: '/timer',
+                      routes: [
+                        GoRoute(
+                          path: '/running',
+                          name: '/running',
+                          builder: (context, state) {
+                            final duration = Duration(
+                              hours: int.parse(
+                                state.uri.queryParameters['hours'] ?? '0',
+                              ),
+                              minutes: int.parse(
+                                state.uri.queryParameters['minutes'] ?? '0',
+                              ),
+                              seconds: int.parse(
+                                state.uri.queryParameters['seconds'] ?? '0',
+                              ),
+                            );
+                            return TimerRunningPage(originalDuration: duration);
+                          },
+                        ),
+                      ],
                       builder: (context, state) {
                         return const TimerPage();
                       },

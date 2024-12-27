@@ -9,7 +9,7 @@ class AlarmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultPageLayout(
       title: const Text('Alarm'),
-      children: [
+      slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {

@@ -4,12 +4,12 @@ class DefaultPageLayout extends StatelessWidget {
   const DefaultPageLayout({
     super.key,
     required this.title,
-    required this.children,
+    required this.slivers,
     this.physics,
   });
 
   final Widget title;
-  final List<Widget> children;
+  final List<Widget> slivers;
   final ScrollPhysics? physics;
 
   @override
@@ -34,7 +34,7 @@ class DefaultPageLayout extends StatelessWidget {
             ),
           ),
         ),
-        for (Widget child in children)
+        for (Widget child in slivers)
           child,
       ],
     );

@@ -90,7 +90,8 @@ class _ClockPageState extends State<ClockPage> {
                             onPressed: () {
                               context.read<ClockBloc>().add(
                                     DeleteTimeZoneEvent(
-                                        location: locations[index].name),
+                                      location: locations[index].name,
+                                    ),
                                   );
                             },
                             icon: const Icon(Icons.close),

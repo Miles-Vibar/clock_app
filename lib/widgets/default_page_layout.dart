@@ -18,6 +18,7 @@ class DefaultPageLayout extends StatelessWidget {
       physics: physics,
       slivers: [
         SliverAppBar(
+          automaticallyImplyLeading: false,
           pinned: true,
           floating: false,
           expandedHeight: 150.0,

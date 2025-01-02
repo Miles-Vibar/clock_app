@@ -1,18 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-abstract class StopwatchState extends Equatable {}
-
-class StopwatchStopped extends StopwatchState {
+abstract class StopwatchState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class StopwatchRunning extends StopwatchState {
-  @override
-  List<Object?> get props => [];
-}
+class StopwatchStopped extends StopwatchState {}
 
-class StopwatchPaused extends StopwatchState {
-  @override
-  List<Object?> get props => [];
-}
+class StopwatchRunning extends StopwatchState {}
+
+class StopwatchPaused extends StopwatchState {}

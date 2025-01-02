@@ -1,11 +1,15 @@
+import 'package:clock_app/bloc/clock/bloc.dart';
+import 'package:clock_app/bloc/clock/events.dart';
 import 'package:clock_app/bloc/stopwatch/bloc.dart';
 import 'package:clock_app/bloc/timer/bloc.dart';
 import 'package:clock_app/bloc/timer/events.dart';
+import 'package:clock_app/data/repositories/location_repository.dart';
 import 'package:clock_app/pages/alarm_page.dart';
 import 'package:clock_app/pages/clock_page.dart';
 import 'package:clock_app/pages/stopwatch_page.dart';
 import 'package:clock_app/pages/timer_page.dart';
 import 'package:clock_app/pages/timer_running_page.dart';
+import 'package:clock_app/pages/timezone_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,111 +30,123 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider<StopwatchBloc>(
-          create: (context) => StopwatchBloc(),
-        ),
-        BlocProvider<TimerBloc>(
-          create: (context) => TimerBloc()..add(TimerStop()),
+        RepositoryProvider(
+          create: (context) => LocationRepository(),
         ),
       ],
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: colorScheme,
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-            elevation: 5,
-            shape: const CircleBorder(),
-            backgroundColor: colorScheme.onPrimary,
-            foregroundColor: colorScheme.primary,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<ClockBloc>(
+            create: (context) => ClockBloc(context.read<LocationRepository>())
+              ..add(InitializeEvent()),
           ),
-          iconButtonTheme: IconButtonThemeData(
-            style: IconButton.styleFrom(
+          BlocProvider<StopwatchBloc>(
+            create: (context) => StopwatchBloc(),
+          ),
+          BlocProvider<TimerBloc>(
+            create: (context) => TimerBloc()..add(TimerStop()),
+          ),
+        ],
+        child: MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: colorScheme,
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
               elevation: 5,
-              shadowColor: colorScheme.onSurface.withValues(alpha: 0.5),
-              padding: EdgeInsets.zero,
+              shape: const CircleBorder(),
               backgroundColor: colorScheme.onPrimary,
+              foregroundColor: colorScheme.primary,
             ),
+            iconTheme: IconThemeData(
+              color: colorScheme.primary,
+            ),
+            useMaterial3: true,
           ),
-          iconTheme: IconThemeData(
-            color: colorScheme.primary,
+          routerConfig: GoRouter(
+            initialLocation: '/alarm',
+            routes: [
+              StatefulShellRoute.indexedStack(
+                branches: [
+                  StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: '/alarm',
+                        builder: (context, state) {
+                          return const AlarmPage();
+                        },
+                      ),
+                    ],
+                  ),
+                  StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: '/clock',
+                        routes: [
+                          GoRoute(
+                            path: 'add',
+                            builder: (context, state) {
+                              return const TimeZonePage();
+                            },
+                          ),
+                        ],
+                        builder: (context, state) {
+                          return const ClockPage();
+                        },
+                      ),
+                    ],
+                  ),
+                  StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: '/stopwatch',
+                        builder: (context, state) {
+                          return const StopwatchPage();
+                        },
+                      ),
+                    ],
+                  ),
+                  StatefulShellBranch(
+                    routes: [
+                      GoRoute(
+                        path: '/timer',
+                        routes: [
+                          GoRoute(
+                            path: '/running',
+                            name: '/running',
+                            builder: (context, state) {
+                              final duration = Duration(
+                                hours: int.parse(
+                                  state.uri.queryParameters['hours'] ?? '0',
+                                ),
+                                minutes: int.parse(
+                                  state.uri.queryParameters['minutes'] ?? '0',
+                                ),
+                                seconds: int.parse(
+                                  state.uri.queryParameters['seconds'] ?? '0',
+                                ),
+                              );
+                              return TimerRunningPage(
+                                  originalDuration: duration);
+                            },
+                          ),
+                        ],
+                        builder: (context, state) {
+                          return const TimerPage();
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+                builder: (context, state, navigationShell) {
+                  return MainLayout(
+                    navigationShell: navigationShell,
+                  );
+                },
+              )
+            ],
           ),
-          useMaterial3: true,
-        ),
-        routerConfig: GoRouter(
-          initialLocation: '/alarm',
-          routes: [
-            StatefulShellRoute.indexedStack(
-              branches: [
-                StatefulShellBranch(
-                  routes: [
-                    GoRoute(
-                      path: '/alarm',
-                      builder: (context, state) {
-                        return const AlarmPage();
-                      },
-                    ),
-                  ],
-                ),
-                StatefulShellBranch(
-                  routes: [
-                    GoRoute(
-                      path: '/clock',
-                      builder: (context, state) {
-                        return const ClockPage();
-                      },
-                    ),
-                  ],
-                ),
-                StatefulShellBranch(
-                  routes: [
-                    GoRoute(
-                      path: '/stopwatch',
-                      builder: (context, state) {
-                        return const StopwatchPage();
-                      },
-                    ),
-                  ],
-                ),
-                StatefulShellBranch(
-                  routes: [
-                    GoRoute(
-                      path: '/timer',
-                      routes: [
-                        GoRoute(
-                          path: '/running',
-                          name: '/running',
-                          builder: (context, state) {
-                            final duration = Duration(
-                              hours: int.parse(
-                                state.uri.queryParameters['hours'] ?? '0',
-                              ),
-                              minutes: int.parse(
-                                state.uri.queryParameters['minutes'] ?? '0',
-                              ),
-                              seconds: int.parse(
-                                state.uri.queryParameters['seconds'] ?? '0',
-                              ),
-                            );
-                            return TimerRunningPage(originalDuration: duration);
-                          },
-                        ),
-                      ],
-                      builder: (context, state) {
-                        return const TimerPage();
-                      },
-                    ),
-                  ],
-                ),
-              ],
-              builder: (context, state, navigationShell) {
-                return MainLayout(
-                  navigationShell: navigationShell,
-                );
-              },
-            )
-          ],
         ),
       ),
     );

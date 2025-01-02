@@ -1,6 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-abstract class TimerEvent extends Equatable {}
+abstract class TimerEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class TimerStart extends TimerEvent {
   final int? hours, minutes, seconds;
@@ -19,12 +22,6 @@ class TimerStart extends TimerEvent {
       ];
 }
 
-class TimerPause extends TimerEvent {
-  @override
-  List<Object?> get props => [];
-}
+class TimerPause extends TimerEvent {}
 
-class TimerStop extends TimerEvent {
-  @override
-  List<Object?> get props => [];
-}
+class TimerStop extends TimerEvent {}

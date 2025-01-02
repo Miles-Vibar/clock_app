@@ -75,9 +75,13 @@ class _TimerRunningPageState extends State<TimerRunningPage> {
         }
       });
 
-      if ((timer.tick + _ticks) == (widget.originalDuration.inMilliseconds / 100)) {
+      if ((timer.tick + _ticks) ==
+          (widget.originalDuration.inMilliseconds / 100)) {
         timer.cancel();
-        NotificationService().showNotification(title: 'Timer Finished', body: 'Timer has finished counting down!');
+        NotificationService().showNotification(
+          title: 'Timer Finished',
+          body: 'Timer has finished counting down!',
+        );
         setState(() {
           _isFinished = true;
         });
@@ -110,7 +114,6 @@ class _TimerRunningPageState extends State<TimerRunningPage> {
             leading: BackButton(
               style: IconButton.styleFrom(
                 elevation: 0,
-                backgroundColor: Theme.of(context).colorScheme.surface,
               ),
               onPressed: () {
                 context.pop();

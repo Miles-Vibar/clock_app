@@ -24,6 +24,15 @@ class CustomFab extends StatelessWidget {
                 aspectRatio: 1 / 1,
                 child: IconButton(
                   onPressed: onPressed,
+                  style: IconButton.styleFrom(
+                    elevation: 5,
+                    shadowColor: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.5),
+                    padding: EdgeInsets.zero,
+                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                  ),
                   icon: Icon(
                     icon,
                     size: 40,
@@ -35,6 +44,15 @@ class CustomFab extends StatelessWidget {
                 icon: Icon(
                   icon,
                   size: 40,
+                ),
+                style: IconButton.styleFrom(
+                  elevation: 5,
+                  shadowColor: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.5),
+                  padding: EdgeInsets.zero,
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
       ),
